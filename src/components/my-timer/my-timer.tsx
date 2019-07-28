@@ -2,7 +2,7 @@
   * Copyright 2019 - Author gauravm.git@gmail.com
   */
 
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, Watch } from '@stencil/core';
 import { TweenMax, Power3 } from 'gsap';
 
 @Component({
@@ -11,12 +11,50 @@ import { TweenMax, Power3 } from 'gsap';
 })
 export class MyTime {
 
+  /**
+   * Hours input for the timer.
+   */
   @Prop()
   public hours = 0;
+
+  /**
+   * Minutes input for the timer.
+   */
   @Prop()
   public minutes = 0;
+
+  /**
+   * Seconds input for the timer.
+   */
   @Prop()
   public seconds = 0;
+
+  @Watch('hours')
+  hoursChangeHandler(newValue: number, _oldValue: number) {
+
+    this.hours = newValue;
+
+    this.clearUp();
+
+  }
+
+  @Watch('minutes')
+  minutesChangeHandler(newValue: number, _oldValue: number) {
+
+    this.minutes = newValue;
+
+    this.clearUp();
+
+  }
+
+  @Watch('seconds')
+  secondsChangeHandler(newValue: number, _oldValue: number) {
+
+    this.seconds = newValue;
+
+    this.clearUp();
+
+  }
 
   private mHours = 0;
   private mMinutes = 0;
@@ -29,39 +67,16 @@ export class MyTime {
   private mTotalSeconds = 0;
   private mCountdownInterval = -1;
 
-  public componentWillLoad(): void {
-
-    this.mHours = this.hours;
-    this.mMinutes = this.minutes;
-    this.mSeconds = this.seconds;
-
-    this.mTotalSeconds = ((this.mHours * 60 * 60) + (this.mMinutes * 60) + this.mSeconds);
-
-  }
-
   public componentDidRender(): void {
 
-    // Update time.
-    // Hours.
-    this.checkAndUpdateTime(this.mHours, TimeUnit.Hours);
-
-    // Minutes.
-    this.checkAndUpdateTime(this.mMinutes, TimeUnit.Minutes);
-
-    // Seconds.
-    this.checkAndUpdateTime(this.mSeconds, TimeUnit.Seconds);
-
+    this.init();
     this.startCountdown();
 
   }
 
   public disconnectedCallback(): void {
 
-    if (this.mCountdownInterval > -1) {
-
-      clearInterval(this.mCountdownInterval);
-
-    }
+    this.clearUp();
 
   }
 
@@ -162,6 +177,47 @@ export class MyTime {
 
   }
 
+  /**
+   * @internal
+   */
+  private init(): void {
+
+    this.mHours = this.hours;
+    this.mMinutes = this.minutes;
+    this.mSeconds = this.seconds;
+
+    this.mTotalSeconds = ((this.mHours * 60 * 60) + (this.mMinutes * 60) + this.mSeconds);
+
+    // Update time.
+    // Hours.
+    this.checkAndUpdateTime(this.mHours, TimeUnit.Hours);
+
+    // Minutes.
+    this.checkAndUpdateTime(this.mMinutes, TimeUnit.Minutes);
+
+    // Seconds.
+    this.checkAndUpdateTime(this.mSeconds, TimeUnit.Seconds);
+
+  }
+
+  /**
+   * @internal
+   */
+  private clearUp() {
+
+    if (this.mCountdownInterval > -1) {
+
+      clearInterval(this.mCountdownInterval);
+
+      this.mCountdownInterval = -1;
+
+    }
+
+  }
+
+  /**
+   * @internal
+   */
   private startCountdown(): void {
 
     this.mCountdownInterval = setInterval(() => {
@@ -207,6 +263,9 @@ export class MyTime {
 
   }
 
+  /**
+   * @internal
+   */
   private checkAndUpdateTime(value: number, type: TimeUnit): void {
 
     const valueStr = value.toString();
@@ -223,6 +282,9 @@ export class MyTime {
 
   }
 
+  /**
+   * @internal
+   */
   private animateTimeSlot(tensValue: string, unitValue: string, type: TimeUnit): void {
 
     switch (type) {
@@ -243,6 +305,9 @@ export class MyTime {
 
   }
 
+  /**
+   * @internal
+   */
   private animateFigure(timeSlotElem: HTMLElement, tensValue: string, unitValue: string): void {
 
     const figureTensElem = timeSlotElem.querySelector('.figure.tens');
@@ -253,6 +318,9 @@ export class MyTime {
 
   }
 
+  /**
+   * @internal
+   */
   private animateTopAndBottom(figureElem: Element, value: string): void {
 
     const topElem = figureElem.querySelector('.top');
@@ -293,6 +361,9 @@ export class MyTime {
 
 }
 
+/**
+ * @internal
+*/
 enum TimeUnit {
 
   Hours = 'Hours',

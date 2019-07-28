@@ -24,8 +24,17 @@ export namespace Components {
     'middle': string;
   }
   interface MyTimer {
+    /**
+    * Hours input for the timer.
+    */
     'hours': number;
+    /**
+    * Minutes input for the timer.
+    */
     'minutes': number;
+    /**
+    * Seconds input for the timer.
+    */
     'seconds': number;
   }
 }
@@ -66,8 +75,17 @@ declare namespace LocalJSX {
     'middle'?: string;
   }
   interface MyTimer extends JSXBase.HTMLAttributes<HTMLMyTimerElement> {
+    /**
+    * Hours input for the timer.
+    */
     'hours'?: number;
+    /**
+    * Minutes input for the timer.
+    */
     'minutes'?: number;
+    /**
+    * Seconds input for the timer.
+    */
     'seconds'?: number;
   }
 
