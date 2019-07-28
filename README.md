@@ -1,2 +1,2 @@
 # web-components
-A collection of custom we components built using stencil
+A collection of custom web components built using stencil
