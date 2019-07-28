@@ -23,6 +23,11 @@ export namespace Components {
     */
     'middle': string;
   }
+  interface MyTimer {
+    'hours': number;
+    'minutes': number;
+    'seconds': number;
+  }
 }
 
 declare global {
@@ -33,8 +38,15 @@ declare global {
     prototype: HTMLMyComponentElement;
     new (): HTMLMyComponentElement;
   };
+
+  interface HTMLMyTimerElement extends Components.MyTimer, HTMLStencilElement {}
+  var HTMLMyTimerElement: {
+    prototype: HTMLMyTimerElement;
+    new (): HTMLMyTimerElement;
+  };
   interface HTMLElementTagNameMap {
     'my-component': HTMLMyComponentElement;
+    'my-timer': HTMLMyTimerElement;
   }
 }
 
@@ -53,9 +65,15 @@ declare namespace LocalJSX {
     */
     'middle'?: string;
   }
+  interface MyTimer extends JSXBase.HTMLAttributes<HTMLMyTimerElement> {
+    'hours'?: number;
+    'minutes'?: number;
+    'seconds'?: number;
+  }
 
   interface IntrinsicElements {
     'my-component': MyComponent;
+    'my-timer': MyTimer;
   }
 }
 
