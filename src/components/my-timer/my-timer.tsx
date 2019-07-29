@@ -9,7 +9,7 @@ import { TweenMax, Power3 } from 'gsap';
   tag: 'my-timer',
   styleUrl: 'my-timer.scss'
 })
-export class MyTime {
+export class MyTimer {
 
   /**
    * Hours input for the timer.
