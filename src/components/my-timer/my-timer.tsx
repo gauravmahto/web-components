@@ -363,7 +363,7 @@ export class MyTimer {
 
 /**
  * @internal
-*/
+ */
 enum TimeUnit {
 
   Hours = 'Hours',
