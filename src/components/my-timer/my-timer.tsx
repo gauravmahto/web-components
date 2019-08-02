@@ -2,12 +2,13 @@
   * Copyright 2019 - Author gauravm.git@gmail.com
   */
 
-import { Component, h, Prop, Watch } from '@stencil/core';
+import { Component, h, Prop, Watch, Method } from '@stencil/core';
 import { TweenMax, Power3 } from 'gsap';
 
 @Component({
   tag: 'my-timer',
-  styleUrl: 'my-timer.scss'
+  styleUrl: 'my-timer.scss',
+  shadow: true
 })
 export class MyTimer {
 
@@ -28,6 +29,23 @@ export class MyTimer {
    */
   @Prop()
   public seconds = 0;
+
+  @Method()
+  public async start(): Promise<void> {
+
+    this.stop();
+
+    this.init();
+    this.startCountdown();
+
+  }
+
+  @Method()
+  public async stop(): Promise<void> {
+
+    this.clearUp();
+
+  }
 
   @Watch('hours')
   hoursChangeHandler(newValue: number, _oldValue: number) {
@@ -92,53 +110,62 @@ export class MyTimer {
 
           <span class="count-title">Hours</span>
 
-          <div class="figure hours tens">
-            <span class="top">0</span>
-            <span class="top-back">
-              <span>0</span>
-            </span>
-            <span class="bottom">0</span>
-            <span class="bottom-back">
-              <span>0</span>
-            </span>
+          <div class="figure-container">
+
+            <div class="figure hours tens">
+              <span class="top">0</span>
+              <span class="top-back">
+                <span>0</span>
+              </span>
+              <span class="bottom">0</span>
+              <span class="bottom-back">
+                <span>0</span>
+              </span>
+            </div>
+
+            <div class="figure hours unit">
+              <span class="top">0</span>
+              <span class="top-back">
+                <span>0</span>
+              </span>
+              <span class="bottom">0</span>
+              <span class="bottom-back">
+                <span>0</span>
+              </span>
+            </div>
+
           </div>
 
-          <div class="figure hours unit">
-            <span class="top">0</span>
-            <span class="top-back">
-              <span>0</span>
-            </span>
-            <span class="bottom">0</span>
-            <span class="bottom-back">
-              <span>0</span>
-            </span>
-          </div>
         </div>
 
         <div class="time-container min" ref={(elem) => this.mMinutesElement = elem}>
 
           <span class="count-title">Minutes</span>
 
-          <div class="figure min tens">
-            <span class="top">0</span>
-            <span class="top-back">
-              <span>0</span>
-            </span>
-            <span class="bottom">0</span>
-            <span class="bottom-back">
-              <span>0</span>
-            </span>
-          </div>
+          <div class="figure-container">
 
-          <div class="figure min unit">
-            <span class="top">0</span>
-            <span class="top-back">
-              <span>0</span>
-            </span>
-            <span class="bottom">0</span>
-            <span class="bottom-back">
-              <span>0</span>
-            </span>
+            <div class="figure min tens">
+              <span class="top">0</span>
+              <span class="top-back">
+                <span>0</span>
+              </span>
+              <span class="bottom">0</span>
+              <span class="bottom-back">
+                <span>0</span>
+              </span>
+            </div>
+
+            <div class="figure min unit">
+              <span class="top">0</span>
+              <span class="top-back">
+                <span>0</span>
+              </span>
+              <span class="bottom">0</span>
+              <span class="bottom-back">
+                <span>0</span>
+              </span>
+            </div>
+
           </div>
 
         </div>
@@ -147,26 +174,30 @@ export class MyTimer {
 
           <span class="count-title">Seconds</span>
 
-          <div class="figure sec tens">
-            <span class="top">0</span>
-            <span class="top-back">
-              <span>0</span>
-            </span>
-            <span class="bottom">0</span>
-            <span class="bottom-back">
-              <span>0</span>
-            </span>
-          </div>
+          <div class="figure-container">
 
-          <div class="figure sec unit">
-            <span class="top">0</span>
-            <span class="top-back">
-              <span>0</span>
-            </span>
-            <span class="bottom">0</span>
-            <span class="bottom-back">
-              <span>0</span>
-            </span>
+            <div class="figure sec tens">
+              <span class="top">0</span>
+              <span class="top-back">
+                <span>0</span>
+              </span>
+              <span class="bottom">0</span>
+              <span class="bottom-back">
+                <span>0</span>
+              </span>
+            </div>
+
+            <div class="figure sec unit">
+              <span class="top">0</span>
+              <span class="top-back">
+                <span>0</span>
+              </span>
+              <span class="bottom">0</span>
+              <span class="bottom-back">
+                <span>0</span>
+              </span>
+            </div>
+
           </div>
 
         </div>

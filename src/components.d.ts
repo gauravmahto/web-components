@@ -36,6 +36,8 @@ export namespace Components {
     * Seconds input for the timer.
     */
     'seconds': number;
+    'start': () => Promise<void>;
+    'stop': () => Promise<void>;
   }
 }
 
